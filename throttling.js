@@ -11,21 +11,21 @@
 // }
 
 function throttling(func, limit) {
-  let lastFunc;
-  let lastRan;
+  let executeFunc;
+  let lastRanTimeStamp;
   return function (...args) {
-    if (!lastRan) {
-      debugger;
+    if (!lastRanTimeStamp) {
       func(...args);
-      lastRan = Date.now()
+      lastRanTimeStamp = Date.now()
     } else {
-      clearTimeout(lastFunc);
-      lastFunc = setTimeout(function() {
-        if ((Date.now() - lastRan) >= limit) {
+      clearTimeout(executeFunc);
+      const timeFromLastRan = (Date.now() - lastRanTimeStamp);
+      executeFunc = setTimeout(function() {
+        if (timeFromLastRan >= limit) {
           func(...args);
-          lastRan = Date.now()
+          lastRanTimeStamp = Date.now();
         }
-      }, limit - (Date.now() - lastRan))
+      }, limit - timeFromLastRan)
     }
   };
 }
