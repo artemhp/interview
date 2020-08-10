@@ -1,10 +1,10 @@
-function debounce(func, timer) {
+function debounce(func, wait) {
     let timeout;
     return function (...args) {
         clearTimeout(timeout);
         timeout = setTimeout(() => {
             func(...args)
-        }, timer)
+        }, wait)
     }
 }
 
