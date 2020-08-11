@@ -4,6 +4,8 @@
 
 * Debounce
 * Throttling
+* Map
+* Filter
 
 ## Up &amp; running
 

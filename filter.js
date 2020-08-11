@@ -1,13 +1,15 @@
-Array.prototype.myMap = function (callback) {
+Array.prototype.myFilter = function (callback) {
     const transformToNewArray  = (array, index = 0, newArray = []) => {
         if (array.length === index) {
             return newArray;
         }
-        const computedArrayItem = callback(array[index], index, array);
-        newArray=[
-            ...newArray,
-            computedArrayItem
-        ];
+        const condition = callback(array[index], index, array);
+        if (condition) {
+            newArray=[
+                ...newArray,
+                array[index]
+            ];
+        }
         index++;
         return transformToNewArray(array, index, newArray);
     }
