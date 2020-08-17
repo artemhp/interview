@@ -1,4 +1,4 @@
-Array.prototype.myMap = function (callback) {
+const map = function (callback) {
     const transformToNewArray  = (array, index = 0, newArray = []) => {
         if (array.length === index) {
             return newArray;
@@ -13,3 +13,10 @@ Array.prototype.myMap = function (callback) {
     }
     return transformToNewArray(this);
 };
+
+/* istanbul ignore next */
+if ( typeof module === "object" ) {
+    module.exports = map;
+} else {
+    Array.prototype.aMap = map;
+}

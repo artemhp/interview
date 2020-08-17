@@ -1,0 +1,26 @@
+{
+  "name": "interview",
+  "version": "1.0.0",
+  "description": "### Write from scratch",
+  "main": "index.html",
+  "scripts": {
+    "test": "jest --coverage"
+  },
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/artemhp/interview.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/artemhp/interview/issues"
+  },
+  "homepage": "https://github.com/artemhp/interview#readme",
+  "devDependencies": {
+    "jest": "^26.3.0"
+  },
+  "dependencies": {
+    "babel-jest": "^26.3.0"
+  }
+}
