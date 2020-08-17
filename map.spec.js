@@ -18,6 +18,7 @@ describe('Iterate items in array of 6 elements', () => {
             .toEqual([1001, 1002, 1003, 1004, 1005])
     });
     test('with no callback - the same as no condition', () => {
-        expect(() => filteredItems.aFilter()).toThrow()
+        expect(() => filteredItems.aMap())
+            .toThrow()
     });
 });
