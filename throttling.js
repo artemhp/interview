@@ -1,15 +1,3 @@
-// function throttling(func, limit) {
-//   let inThrottle;
-//   return function (...args) {
-//     console.log(inThrottle);
-//     if (!inThrottle) {
-//       inThrottle = true;
-//       func(...args);
-//       setTimeout(() => (inThrottle = false), limit);
-//     }
-//   };
-// }
-
 function throttling(func, limit) {
   let executeFunc;
   let lastRanTimeStamp;
@@ -21,19 +9,14 @@ function throttling(func, limit) {
       clearTimeout(executeFunc);
       const timeFromLastRan = (Date.now() - lastRanTimeStamp);
       executeFunc = setTimeout(function() {
-        if (timeFromLastRan >= limit) {
           func(...args);
           lastRanTimeStamp = Date.now();
-        }
       }, limit - timeFromLastRan)
     }
   };
 }
 
-
-window.addEventListener(
-  "mousemove",
-  throttling((event) => {
-    console.log(event);
-  }, 5000)
-);
+/* istanbul ignore next */
+if ( typeof module === 'object' ) {
+  module.exports = throttling;
+}
