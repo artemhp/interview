@@ -8,6 +8,7 @@ function debounce(func, wait) {
     }
 }
 
-window.addEventListener('click', debounce((event) => {
-    console.log(event);
-}, 1000));
+/* istanbul ignore next */
+if ( typeof module === 'object' ) {
+    module.exports = debounce;
+}
