@@ -5,7 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="debounce.js"></script>
+    <script>
+      window.addEventListener('click', debounce((event) => {
+        console.log(event);
+      }, 1000));
+    </script>
     <script src="throttling.js"></script>
+    <script>
+      window.addEventListener(
+        "mousemove",
+        throttling((event) => {
+          console.log(event);
+        }, 5000)
+      );
+    </script>
     <script src="map.js"></script>
     <script src="filter.js"></script>
   </head>
