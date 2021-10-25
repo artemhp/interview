@@ -19,30 +19,23 @@ export default function App({
   const [grid, setGrid] = useState(() => generatePopulatedGrid(cols, rows));
 
   useEffect(() => {
-    const interval = setInterval(
-      () => setGrid(nextGrid({ grid, cols, rows })),
-      tick
-    );
-    return () => {
-      clearInterval(interval);
-    };
+    document.documentElement.style.setProperty('--gridColumn', `${cols}`);
+    document.documentElement.style.setProperty('--gridRow', `${rows}`);
+  }, [cols, rows]);
+
+  useEffect(() => {
+    const next = nextGrid({ grid, cols, rows });
+    if (JSON.stringify(next) !== JSON.stringify(grid)) {
+      const interval = setInterval(() => setGrid(next), tick);
+      return () => clearInterval(interval);
+    }
   }, [grid, cols, rows, tick]);
 
   return (
-    <div className='App'>
-      <div className='wrapper'>
-        {grid.map((row, index) => {
-          return (
-            <div key={index}>
-              {row.map((column, index) => (
-                <div key={index}>
-                  <Cell config={column} />
-                </div>
-              ))}
-            </div>
-          );
-        })}
-      </div>
+    <div className='grid'>
+      {grid.map((row, index) =>
+        row.map((column, index) => <Cell key={index} config={column} />)
+      )}
     </div>
   );
 }
