@@ -1,5 +1,5 @@
-import { generateArea } from "./grid";
-import countNeighbors from "./countNeighbors";
+import { generateArea } from './grid';
+import countNeighbors from './countNeighbors';
 
 interface IGridItem {
   isActive: boolean;
@@ -17,19 +17,19 @@ const setItemState = (state: IGridItem, neighbors: number): IGridItem => {
   // Any live cell with fewer than two live neighbours dies (underpopulation).
   if (state.isActive && neighbors < 2) {
     return {
-      isActive: false
+      isActive: false,
     };
   }
   // Any live cell with more than three live neighbours dies (overcrowding).
   if (state.isActive && neighbors > 3) {
     return {
-      isActive: false
+      isActive: false,
     };
   }
   // Any dead cell with exactly three live neighbours becomes a live cell (reproduction).
   if (!state.isActive && neighbors === 3) {
     return {
-      isActive: true
+      isActive: true,
     };
   }
   return state;
@@ -45,7 +45,7 @@ export default function nextGrid({ grid, rows, cols }: IGridConfig): TGrid {
         rows,
         cols,
         indexRow,
-        indexCol
+        indexCol,
       });
 
       next[indexRow][indexCol] = setItemState(state, neighbors);
