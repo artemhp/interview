@@ -19,11 +19,12 @@ const generatePopulatedGrid = (rows: number, cols: number): TGrid => {
   emptyGrid.forEach((col, indexRow) =>
     col.forEach((row, indexCol) => {
       emptyGrid[indexRow][indexCol] = {
-        isActive: generateTrueOrFalse()
+        isActive: generateTrueOrFalse(),
       };
     })
   );
   return emptyGrid;
 };
 
-export { generatePopulatedGrid, generateArea, IGridConfig };
+export { generatePopulatedGrid, generateArea };
+export type { IGridConfig };
