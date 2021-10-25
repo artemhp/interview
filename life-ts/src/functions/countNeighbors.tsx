@@ -1,4 +1,4 @@
-import { IGridConfig } from "./grid";
+import { IGridConfig } from './grid';
 
 interface INeighborsConfig extends IGridConfig {
   indexRow: number;
@@ -10,7 +10,7 @@ export default function countNeighbors({
   indexRow,
   indexCol,
   rows,
-  cols
+  cols,
 }: INeighborsConfig): number {
   let sum = 0;
   for (let i = -1; i < 2; i++) {
