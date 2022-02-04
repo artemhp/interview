@@ -1,10 +1,13 @@
 export function renderCharacter(
   root,
-  { id, name, status, species, type, image }
+  { id, name, status, species, type, image },
+  handleClick
 ) {
   const card = createEl('div', {
     attrs: { 'data-id': `character-${id}`, class: 'character-card' }
   })
+
+  card.onclick = ({ currentTarget }) => handleClick(id, currentTarget)
 
   const img = createEl('img', {
     attrs: { class: 'character-pic', src: image }
@@ -23,7 +26,36 @@ export function renderCharacter(
   root.appendChild(card)
 }
 
-function createEl(type, { attrs, text } = {}) {
+export function renderNavigation(root, page, info, prev, next) {
+  const wrapper = createEl('div', { attrs: { class: 'page-wrapper' } })
+
+  const prevPage = createEl('div', {
+    attrs: { class: 'page-prev' },
+    text: 'Prev Page'
+  })
+
+  if (!info.prev) {
+    prevPage.style.visibility = 'hidden'
+  }
+  prevPage.onclick = prev
+
+  const nextPage = createEl('div', {
+    attrs: { class: 'page-next' },
+    text: 'Next Page'
+  })
+
+  if (!info.next) {
+    nextPage.style.visibility = 'hidden'
+  }
+  nextPage.onclick = next
+
+  wrapper.appendChild(prevPage)
+  wrapper.appendChild(nextPage)
+
+  root.appendChild(wrapper)
+}
+
+export function createEl(type, { attrs, text } = {}) {
   const element = document.createElement(type)
 
   if (attrs) {

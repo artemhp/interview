@@ -142,7 +142,9 @@ async function getCharacter(id) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.createEl = createEl;
 exports.renderCharacter = renderCharacter;
+exports.renderNavigation = renderNavigation;
 
 function renderCharacter(root, {
   id,
@@ -151,13 +153,18 @@ function renderCharacter(root, {
   species,
   type,
   image
-}) {
+}, handleClick) {
   const card = createEl('div', {
     attrs: {
       'data-id': `character-${id}`,
       class: 'character-card'
     }
   });
+
+  card.onclick = ({
+    currentTarget
+  }) => handleClick(id, currentTarget);
+
   const img = createEl('img', {
     attrs: {
       class: 'character-pic',
@@ -176,6 +183,41 @@ function renderCharacter(root, {
   });
   rightCol.appendChild(info);
   root.appendChild(card);
+}
+
+function renderNavigation(root, page, info, prev, next) {
+  const wrapper = createEl('div', {
+    attrs: {
+      class: 'page-wrapper'
+    }
+  });
+  const prevPage = createEl('div', {
+    attrs: {
+      class: 'page-prev'
+    },
+    text: 'Prev Page'
+  });
+
+  if (!info.prev) {
+    prevPage.style.visibility = 'hidden';
+  }
+
+  prevPage.onclick = prev;
+  const nextPage = createEl('div', {
+    attrs: {
+      class: 'page-next'
+    },
+    text: 'Next Page'
+  });
+
+  if (!info.next) {
+    nextPage.style.visibility = 'hidden';
+  }
+
+  nextPage.onclick = next;
+  wrapper.appendChild(prevPage);
+  wrapper.appendChild(nextPage);
+  root.appendChild(wrapper);
 }
 
 function createEl(type, {
@@ -202,16 +244,40 @@ var _api = require("./api");
 var _render = require("./render");
 
 const root = document.getElementById('app');
-(0, _api.getAllCharacters)(2).then(({
-  info,
-  results
-}) => {
-  console.log('response', {
+const url = new URL(window.location.href);
+const [category, page] = url.pathname.substring(1).split('/');
+let initialPage = 1;
+
+if (category === 'list' && page) {
+  initialPage = +page;
+}
+
+function rerenderUI(initialPage) {
+  renderList(initialPage);
+  history.pushState({}, null, `/list/${initialPage}`);
+}
+
+function renderList(initialPage) {
+  (0, _api.getAllCharacters)(initialPage).then(({
     info,
     results
-  });
-  results.forEach(character => (0, _render.renderCharacter)(root, character));
-}).catch(err => console.error(err));
+  }) => {
+    root.innerHTML = '';
+    (0, _render.renderNavigation)(root, page, info, () => rerenderUI(--initialPage), () => rerenderUI(++initialPage));
+    console.log('response', {
+      info,
+      results
+    });
+    results.forEach(character => (0, _render.renderCharacter)(root, character, (id, target) => {
+      (0, _api.getCharacter)(id).then(el => console.log(el));
+      target.style.background = 'red';
+      console.log(target);
+      target.setAttribute('data-state', 'open');
+    }));
+  }).catch(err => console.error(err));
+}
+
+renderList(initialPage);
 },{"./api":"src/api.js","./render":"src/render.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -240,7 +306,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50993" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49989" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
